@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #e74c3c;
+            margin-top: 30px;
+            border-left: 4px solid #e74c3c;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        .command {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .tip {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kompleksowy przewodnik Unix/Linux i Git</h1>
+
+    <h2>1. Podstawowe komendy terminala</h2>
+    <div class="command">
+        pwd                 # pokazuje aktualny katalog<br>
+        ls                  # lista plików<br>
+        ls -la             # szczegółowa lista z ukrytymi plikami<br>
+        cd [katalog]       # zmiana katalogu<br>
+        cd ..              # katalog wyżej<br>
+        mkdir [nazwa]      # tworzenie katalogu<br>
+        rm [plik]          # usuwa plik<br>
+        rm -r [katalog]    # usuwa katalog rekursywnie<br>
+        cp [źródło] [cel]  # kopiuje plik<br>
+        mv [źródło] [cel]  # przenosi/zmienia nazwę<br>
+        touch [plik]       # tworzy pusty plik<br>
+        cat [plik]         # wyświetla zawartość pliku
+    </div>
+
+    <h2>2. Zarządzanie uprawnieniami</h2>
+    <div class="command">
+        chmod [prawa] [plik]     # zmiana uprawnień pliku<br>
+        chmod 755 [plik]         # rwx dla właściciela, rx dla grupy i innych<br>
+        chmod -R [prawa] [kat]   # rekursywnie dla katalogu<br>
+        chown [użytk] [plik]     # zmiana właściciela<br>
+        chown -R [użytk] [kat]   # rekursywnie dla katalogu<br>
+        chgrp [grupa] [plik]     # zmiana grupy
+    </div>
+
+    <h2>3. Manipulacja tekstem</h2>
+    
+    <h3>cut</h3>
+    <div class="command">
+        cut -d";" -f1     # pierwsza kolumna, separator ;<br>
+        cut -d";" -f1,2   # pierwsza i druga kolumna<br>
+        cut -d";" -f1-3   # kolumny od 1 do 3<br>
+        cut -c1           # pierwszy znak<br>
+        cut -c1-5         # znaki od 1 do 5
+    </div>
+
+    <h3>head i tail</h3>
+    <div class="command">
+        head -c 5           # pierwsze 5 bajtów<br>
+        head -n 5           # pierwsze 5 linii<br>
+        tail -n 10          # ostatnie 10 linii<br>
+        tail -n +2          # wszystko od 2 linii<br>
+        head -19 | tail -10 # linie od 10 do 19
+    </div>
+
+    <h3>tr</h3>
+    <div class="command">
+        tr -d "\n"         # usuwa znaki nowej linii<br>
+        tr -s " "          # zamienia wiele spacji w jedną<br>
+        tr -d "\t"         # usuwa tabulatory<br>
+        tr ";" ","         # zamienia średniki na przecinki
+    </div>
+
+    <h3>wc</h3>
+    <div class="command">
+        wc                 # linie słowa znaki<br>
+        wc -l             # tylko linie<br>
+        wc -w             # tylko słowa<br>
+        wc -c             # tylko znaki<br>
+        wc -L             # długość najdłuższej linii
+    </div>
+
+    <h3>sort i uniq</h3>
+    <div class="command">
+        sort              # sortuje linie<br>
+        sort -u           # sortuje i usuwa duplikaty<br>
+        sort -k2         # sortuje według drugiej kolumny<br>
+        sort -k4,5       # sortuje według 4 i 5 kolumny<br>
+        uniq             # usuwa sąsiadujące duplikaty<br>
+        uniq -d          # pokazuje tylko duplikaty<br>
+        uniq -c          # liczy wystąpienia
+    </div>
+
+    <h2>4. Wyszukiwanie - grep i find</h2>
+    
+    <h3>grep</h3>
+    <div class="command">
+        grep "wzorzec"             # szuka wzorca<br>
+        grep -i "wzorzec"          # ignoruje wielkość liter<br>
+        grep -v "wzorzec"          # linie nie zawierające wzorca<br>
+        grep -c "wzorzec"          # liczy wystąpienia<br>
+        grep -n "wzorzec"          # pokazuje numery linii<br>
+        grep -r "wzorzec" [kat]    # szuka rekursywnie<br>
+        grep -o "wzorzec"          # pokazuje tylko dopasowania
+    </div>
+
+    <h3>find</h3>
+    <div class="command">
+        find . -name "*.txt"       # szuka plików .txt<br>
+        find . -type d             # szuka katalogów<br>
+        find . -type f             # szuka plików<br>
+        find . -size +100M         # pliki większe niż 100MB<br>
+        find . -mtime +7           # modyfikowane ponad tydzień temu<br>
+        find . -perm 644           # pliki z konkretnymi uprawnieniami<br>
+        find . -exec command {} \;  # wykonuje polecenie na znalezionych
+    </div>
+
+    <h2>5. Archiwizacja</h2>
+    <div class="command">
+        # tar<br>
+        tar -czf arch.tar.gz pliki/    # tworzenie archiwum gzip<br>
+        tar -xzf arch.tar.gz           # rozpakowywanie gzip<br>
+        tar -cjf arch.tar.bz2 pliki/   # tworzenie archiwum bzip2<br>
+        tar -xjf arch.tar.bz2          # rozpakowywanie bzip2<br><br>
+        
+        # zip/unzip<br>
+        zip -r arch.zip katalog/       # tworzenie archiwum zip<br>
+        unzip arch.zip                 # rozpakowywanie zip<br>
+        zip -e arch.zip pliki/         # archiwum z hasłem
+    </div>
+
+    <h2>6. Git - system kontroli wersji</h2>
+    <div class="command">
+        # Podstawowe operacje<br>
+        git clone [url]              # klonowanie repozytorium<br>
+        git init                     # inicjalizacja repozytorium<br>
+        git add [plik]               # dodanie pliku<br>
+        git commit -m "msg"          # zatwierdzenie zmian<br>
+        git push origin main         # wysłanie na serwer<br>
+        git pull                     # pobranie zmian<br>
+        git status                   # stan repozytorium<br>
+        git log                      # historia commitów<br><br>
+        
+        # Gałęzie<br>
+        git branch                   # lista gałęzi<br>
+        git branch [nazwa]           # tworzy gałąź<br>
+        git checkout [gałąź]         # przełącza gałąź<br>
+        git merge [gałąź]            # łączy gałęzie
+    </div>
+
+    <h2>7. Wyrażenia regularne</h2>
+    <table>
+        <tr><th>Symbol</th><th>Znaczenie</th></tr>
+        <tr><td>^</td><td>Początek linii</td></tr>
+        <tr><td>$</td><td>Koniec linii</td></tr>
+        <tr><td>.</td><td>Dowolny znak</td></tr>
+        <tr><td>[ ]</td><td>Jeden ze znaków w nawiasach</td></tr>
+        <tr><td>[^ ]</td><td>Żaden ze znaków w nawiasach</td></tr>
+        <tr><td>*</td><td>Zero lub więcej wystąpień</td></tr>
+        <tr><td>+</td><td>Jedno lub więcej wystąpień</td></tr>
+        <tr><td>?</td><td>Zero lub jedno wystąpienie</td></tr>
+        <tr><td>{n}</td><td>Dokładnie n wystąpień</td></tr>
+        <tr><td>{n,}</td><td>Co najmniej n wystąpień</td></tr>
+        <tr><td>{n,m}</td><td>Od n do m wystąpień</td></tr>
+    </table>
+
+    <div class="tip">
+        <h3>Najważniejsze wskazówki:</h3>
+        1. Używaj tab do autouzupełniania poleceń<br>
+        2. Ctrl+C przerywa wykonywanie polecenia<br>
+        3. Ctrl+L czyści ekran terminala<br>
+        4. Używaj strzałek góra/dół do historii poleceń<br>
+        5. Zawsze rób kopie zapasowe przed masowymi operacjami<br>
+        6. Uważaj z poleceniami rm -rf<br>
+        7. Sprawdzaj uprawnienia przed ich zmianą
+    </div>
+</body>
+</html>
